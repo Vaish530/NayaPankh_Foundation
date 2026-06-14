@@ -1086,7 +1086,7 @@ function scrollToBoard(category) {
   }
 }
 
-// Integrated 3D mouse parallax and scroll-driven circular morph mask
+// Integrated scroll-driven parallax transitions (Static mouse)
 function updateHeroParallax() {
   const hero = document.getElementById("introHero");
   if (!hero) return;
@@ -1102,31 +1102,21 @@ function updateHeroParallax() {
     const pct = scrollTop / heroHeight;
     
     // Parallax vertical translation components
-    const translateValY = pct * 90; // translate image slightly downwards
-    
-    // Mouse track subtle offsets (disabled on mobile)
-    const isMobile = window.innerWidth <= 768;
-    const mouseShiftX = isMobile ? 0 : lastMouseX * 0.05;
-    const mouseShiftY = isMobile ? 0 : lastMouseY * 0.05;
+    const translateValY = pct * 90;
 
     if (bgImg) {
       const scaleVal = 1.02 + pct * 0.12;
-      bgImg.style.transform = `scale(${scaleVal}) translate3d(${mouseShiftX}px, ${translateValY + mouseShiftY}px, 0)`;
+      bgImg.style.transform = `scale(${scaleVal}) translate3d(0, ${translateValY}px, 0)`;
       bgImg.style.clipPath = "";
       bgImg.style.webkitClipPath = "";
     }
     
     if (content) {
-      const fadeVal = Math.max(0, 1 - pct * 1.6); // fade out text
-      const contentY = scrollTop * 0.35 + (isMobile ? 0 : lastMouseY * 0.08);
-      const contentX = isMobile ? 0 : lastMouseX * 0.08;
+      const fadeVal = Math.max(0, 1 - pct * 1.6);
+      const contentY = scrollTop * 0.35;
       
-      // 3D perspective tilt relative to mouse
-      const rotX = isMobile ? 0 : -(lastMouseY / heroHeight) * 12;
-      const rotY = isMobile ? 0 : (lastMouseX / hero.offsetWidth) * 12;
-
       content.style.opacity = fadeVal;
-      content.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(${contentX}px, ${contentY}px, 20px)`;
+      content.style.transform = `translate3d(0, ${contentY}px, 0)`;
     }
 
     if (header) {
@@ -1136,17 +1126,6 @@ function updateHeroParallax() {
     }
   }
 }
-
-// mousemove tracks cursor coordinates and updates UI on next frame
-window.addEventListener("mousemove", (e) => {
-  const hero = document.getElementById("introHero");
-  if (!hero || window.scrollY > hero.offsetHeight || window.innerWidth <= 768) return;
-
-  lastMouseX = e.clientX - hero.offsetWidth / 2;
-  lastMouseY = e.clientY - hero.offsetHeight / 2;
-
-  requestAnimationFrame(updateHeroParallax);
-});
 
 window.addEventListener("scroll", () => {
   requestAnimationFrame(updateHeroParallax);

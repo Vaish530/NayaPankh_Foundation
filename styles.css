@@ -165,7 +165,7 @@ html, body {
 
 .hero-bg-wrapper {
   position: absolute;
-  top: 92px; /* Spacing below transparent header */
+  top: 2px; /* Spans to the top of screen under header */
   bottom: 20px;
   left: 2px;
   right: 2px;

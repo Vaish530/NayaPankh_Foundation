@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NayePankh Foundation Portal | Pinterest Space Showcase</title>
+  <meta name="description" content="NayePankh Foundation is a student-led NGO working towards education, youth empowerment, and community impact. Build your custom board, comment, and support.">
+  <meta name="keywords" content="NGO, Internship, student organization, NayePankh Foundation">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=32,h=32,fit=crop,f=png/YKbL494Mv8Ip3qgy/logo-AVLW2LLWZkI8v845.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Interactive Starfield Canvas Background -->
+  <canvas id="starfieldCanvas"></canvas>
+
+  <!-- SVG Glow and Gradient Definitions for Connection Shader Lines -->
+  <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+    <defs>
+      <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="var(--accent-purple)" />
+        <stop offset="100%" stop-color="var(--accent-secondary)" />
+      </linearGradient>
+      <filter id="neonGlowConnection" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="5" result="blur" />
+        <feComponentTransfer in="blur" result="glow">
+          <feFuncA type="linear" slope="1.5"/>
+        </feComponentTransfer>
+        <feMerge>
+          <feMergeNode in="glow" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Ambient Glowing Blobs -->
+  <div class="bg-animations">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <!-- Full-Screen Intro Landing Page (Official Website Style) -->
+  <section class="intro-hero" id="introHero">
+    <div class="hero-bg-wrapper">
+      <div class="hero-bg-img"></div>
+      <div class="hero-bg-overlay"></div>
+    </div>
+    
+    <div class="hero-header">
+      <div class="hero-brand">
+        <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=180,h=180,fit=crop,f=png/YKbL494Mv8Ip3qgy/logo-AVLW2LLWZkI8v845.png" alt="NayePankh Logo">
+        <span>NayePankh Foundation</span>
+      </div>
+      <div class="hero-nav">
+        <a href="#board" onclick="event.preventDefault(); scrollToBoard('home')">Home Board</a>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <h2 class="hero-title">It's that easy to bring a <span>Smile</span> on Their Faces</h2>
+      <p class="hero-subtitle">We don't ask for much, just help us with what you can - Be it Money, Skill or Your Time</p>
+      <div class="hero-btn-row">
+        <button class="btn btn-primary btn-large" onclick="openCheckout()">Donate Now</button>
+        <button class="btn btn-outline btn-large" onclick="scrollToBoard('home')">Explore Board</button>
+      </div>
+    </div>
+
+    <div class="scroll-indicator" onclick="scrollToBoard('home')">
+      <span>Scroll to Enter Cosmic Board</span>
+      <div class="scroll-arrow">
+        <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="#" class="brand" onclick="switchTab('home')">
+      <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=180,h=180,fit=crop,f=png/YKbL494Mv8Ip3qgy/logo-AVLW2LLWZkI8v845.png" alt="NayePankh Logo">
+      <div class="brand-text">
+        <h1 class="brand-title">NayePankh <span>Foundation</span></h1>
+        <span class="brand-subtitle">Govt. Reg. Student NGO</span>
+      </div>
+    </a>
+    
+    <div class="nav-actions">
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link active" data-tab="home" onclick="switchTab('home')">Home Board</a></li>
+      </ul>
+
+      <!-- Theme Switcher -->
+      <button class="theme-toggle" id="themeToggler" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <!-- Moon Icon -->
+        <svg class="moon-icon" viewBox="0 0 24 24">
+          <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8.2-9.8.5-.1 1 .2 1.2.7.2.5 0 1.1-.4 1.4-2.8 2-3.8 5.6-2.3 8.7 1.4 3 4.5 4.8 7.7 4.8 1.2 0 2.4-.3 3.5-.9.4-.2 1 0 1.2.5.2.5 0 1.1-.5 1.3-2.6 1.9-5.7 2.3-8.5 1.3z"/>
+        </svg>
+        <!-- Sun Icon -->
+        <svg class="sun-icon" viewBox="0 0 24 24">
+          <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0s-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.01c.39-.39.39-1.03 0-1.41s-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Global Funding Goal Banner -->
+  <div class="board-container" style="padding-bottom: 0;">
+    <div class="donation-widget" style="margin-bottom: 0;">
+      <div class="progress-header">
+        <span>NayePankh Organization Funding Progress</span>
+        <span id="progressBarStats">₹135,450 raised of ₹200,000 goal</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pinterest Category Tags -->
+  <div class="filter-container" id="filterBar">
+    <div class="filters">
+      <button class="filter-btn active" onclick="handleFilter('all', this)">All Ideas</button>
+      <button class="filter-btn" onclick="handleFilter('info', this)">Our Identity</button>
+      <button class="filter-btn" onclick="handleFilter('hygiene', this)">Health & Hygiene</button>
+      <button class="filter-btn" onclick="handleFilter('education', this)">Education Projects</button>
+      <button class="filter-btn" onclick="handleFilter('interactive', this)">Interactive Portals</button>
+    </div>
+  </div>
+
+  <!-- Main Pinterest Board Grid -->
+  <main class="board-container">
+    <div class="masonry-grid" id="masonryGrid">
+      <!-- Injected via script -->
+    </div>
+  </main>
+
+  <!-- Floating Action Menu -->
+  <div class="floating-menu" id="floatingMenu">
+    <button class="float-trigger" onclick="toggleFloatingMenu()" aria-label="Menu Options">
+      <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    </button>
+    <div class="float-options">
+      <!-- Toggle Sound Mode -->
+      <button class="float-btn" onclick="toggleSoundMode()" aria-label="Toggle Sound Mode">
+        <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+        <span class="float-tooltip">Toggle UI Sound</span>
+      </button>
+      <!-- Volunteer Application -->
+      <button class="float-btn" onclick="triggerVolunteerSignup()" aria-label="Apply to Volunteer">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <span class="float-tooltip">Apply to Volunteer</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Detailed Card Lightbox Modal Overlay -->
+  <div class="modal-overlay" id="detailModalOverlay">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeDetailModal()" aria-label="Close Modal">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+      
+      <!-- Left Media Column -->
+      <div class="modal-media" id="modalMedia">
+        <!-- Injected via JS -->
+      </div>
+      
+      <!-- Right Content Details Column -->
+      <div class="modal-info">
+        <div class="modal-header-actions">
+          <span class="modal-category" id="modalCategory">INITIATIVE</span>
+          <div class="modal-action-row">
+            <button class="btn btn-outline" id="modalShareBtn">Share Pin</button>
+            <button class="btn pin-btn" id="modalBookmarkBtn">Save</button>
+          </div>
+        </div>
+        
+        <h2 class="modal-title" id="modalTitle">Campaign Heading</h2>
+        
+        <div class="modal-meta-auth">
+          <img id="modalAuthorAvatar" src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=180,h=180,fit=crop,f=png/YKbL494Mv8Ip3qgy/logo-AVLW2LLWZkI8v845.png" alt="Author Icon">
+          <div>
+            <span class="modal-author-name" id="modalAuthorName">Author Wing</span>
+            <span class="modal-date" id="modalDate">• Updated Today</span>
+          </div>
+        </div>
+        
+        <p class="modal-description" id="modalDescription">Details content...</p>
+
+        <!-- Simulated Donation Action Card embedded inside details -->
+        <div class="donation-widget" id="modalDonationWidget" style="display: none;">
+          <h4 style="font-weight:700; color:var(--text-primary); font-family:var(--font-heading);">Support this NayePankh project</h4>
+          <p style="font-size:0.8rem; color:var(--text-secondary);">Directly buy school materials, dry rations, or hygiene pad kits for our community beneficiaries.</p>
+          <button class="donation-cta-btn" onclick="openCheckout()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>Back This Project</span>
+          </button>
+        </div>
+
+        <!-- Comments Thread Module -->
+        <div class="comments-section">
+          <h4 class="comments-title">Community Encouragements</h4>
+          <div class="comment-list" id="commentList">
+            <!-- Populated via JS -->
+          </div>
+          <form class="comment-form" id="commentForm">
+            <input type="text" class="comment-input" id="commentInput" placeholder="Add an encouraging message..." required>
+            <button type="submit" class="comment-submit-btn" aria-label="Post Comment">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive Donation Checkout Payment Modal Overlay -->
+  <div class="modal-overlay" id="checkoutOverlay">
+    <div class="modal-card checkout-modal">
+      <button class="modal-close" onclick="closeCheckout()" aria-label="Close Checkout">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+
+      <div class="checkout-header">
+        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <h2>Make a Donation</h2>
+      </div>
+
+      <!-- Processing Loading Spinner overlay -->
+      <div id="checkoutLoader" style="display:none; text-align:center; margin: 2rem 0;">
+        <svg width="40" height="40" viewBox="0 0 50 50" style="animation: rotate 1s linear infinite; margin: 0 auto;">
+          <circle cx="25" cy="25" r="20" fill="none" stroke="var(--accent-secondary)" stroke-width="4" stroke-linecap="round" stroke-dasharray="80, 200"></circle>
+        </svg>
+        <p style="margin-top:1rem; font-size:0.8rem; color:var(--text-secondary);">Processing Secure simulated Transaction...</p>
+      </div>
+
+      <!-- Success check graphic on completion -->
+      <div id="successCheckmark" class="success-checkmark">
+        <svg viewBox="0 0 52 52">
+          <circle class="success-circle" cx="26" cy="26" r="25"></circle>
+          <path class="success-check" d="M14.1 27.2l7.1 7.2 16.7-16.8"></path>
+        </svg>
+        <h3 style="text-align:center; margin-top:1rem; color:#7ac142;">Payment Successful!</h3>
+        <p style="text-align:center; font-size:0.8rem; color:var(--text-secondary); margin-top:0.4rem;">Thank you for supporting NayePankh Foundation.</p>
+      </div>
+
+      <!-- Card form -->
+      <form id="checkoutForm" onsubmit="processPayment(event)" style="display:flex; flex-direction:column; gap:1rem; width:100%;">
+        <div class="form-group">
+          <label class="form-label">Support Amount (INR)</label>
+          <div class="amount-grid">
+            <button type="button" class="amount-btn active" onclick="selectDonationAmount(500, this)">₹500</button>
+            <button type="button" class="amount-btn" onclick="selectDonationAmount(1000, this)">₹1000</button>
+            <button type="button" class="amount-btn" onclick="selectDonationAmount(2000, this)">₹2000</button>
+            <button type="button" class="amount-btn" onclick="selectDonationAmount(5000, this)">₹5000</button>
+          </div>
+          <input type="number" class="form-input" id="checkoutAmountInput" value="500" min="50" required placeholder="Custom amount">
+        </div>
+
+        <div class="payment-card-visual" id="paymentCardVisual">
+          <div class="card-visual-chip"></div>
+          <div class="card-visual-number" id="cardVisualNumber">•••• •••• •••• ••••</div>
+          <div class="card-visual-bottom">
+            <div id="cardVisualName">DONOR NAME</div>
+            <div id="cardVisualExpiry">MM/YY</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Donor Name</label>
+          <input type="text" class="form-input" required placeholder="Enter full name" oninput="updateCardHolder(this)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Card Number</label>
+          <input type="text" class="form-input" required placeholder="XXXX XXXX XXXX XXXX" oninput="formatCardNumber(this)">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="text" class="form-input" required placeholder="MM/YY" oninput="formatCardExpiry(this)">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input type="password" class="form-input" required placeholder="***" maxlength="3">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="checkoutSubmitBtn" style="margin-top:0.5rem; width:100%; height:45px;">Complete Donation</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Volunteer Signup Modal -->
+  <div class="modal-overlay" id="volunteerOverlay">
+    <div class="modal-card checkout-modal" style="max-width: 480px;">
+      <button class="modal-close" onclick="closeVolunteerModal()" aria-label="Close Form">
+        <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+
+      <div class="checkout-header">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        <h2>Apply to Volunteer</h2>
+      </div>
+
+      <form id="volunteerForm" onsubmit="processVolunteerSignup(event)" style="display:flex; flex-direction:column; gap:1rem; width:100%;">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" required placeholder="your.email@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preferred Team Division</label>
+          <select class="form-input" style="-webkit-appearance: none; -moz-appearance: none; appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%237D6E66%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 10px auto; padding-right: 35px;">
+            <option>Public Education & Mentoring</option>
+            <option>Sanitary Pad & Health Distribution</option>
+            <option>Social Media Marketing & Strategy</option>
+            <option>Logistics & Food Campaigns</option>
+            <option>Graphic Design & Web Development</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Briefly explain why you wish to join</label>
+          <textarea class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Your motivation..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" id="volunteerSubmitBtn" style="margin-top:0.5rem; width:100%; height:45px;">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container Bottom Left -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4 style="font-size: 1.1rem; color: var(--text-primary);">NayePankh Foundation</h4>
+        <p>UP Government Registered NGO (80G & 12A compliant). We are a dedicated student-led initiative aiming to spread education, health support, and community care across India. Over 2 lakh lives touched.</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/nayepankhfoundation" target="_blank" class="social-icon-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/company/nayepankh" target="_blank" class="social-icon-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@nayepankhfoundation" target="_blank" class="social-icon-btn" aria-label="YouTube">
+            <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 00-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 00-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 002.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 002.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Compliance Links</h4>
+        <ul class="footer-links">
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cancellation & Refund Policy</a></li>
+          <li><a href="#">Shipping & Exchange Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact Desk</h4>
+        <p>Email: contact@nayepankh.com<br>WhatsApp Support: +91 8318500748<br>Kanpur / Ghaziabad / Delhi NCR</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 NayePankh Foundation. All Rights Reserved. UP Government Certified Non-profit NGO.</span>
+      <span>Website designed by Antigravity AI for Vibe Coder Internship Selection</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

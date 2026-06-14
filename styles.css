@@ -437,6 +437,42 @@ header {
   list-style: none;
 }
 
+/* Radiant Capsule Button (Space/Cosmic Theme) */
+.radiant-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.4rem !important;
+  border-radius: 30px !important;
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-secondary) 100%) !important;
+  color: white !important;
+  font-family: var(--font-heading) !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 15px rgba(0, 240, 255, 0.35), 0 0 15px rgba(189, 0, 255, 0.25) !important;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  text-shadow: none !important;
+  cursor: pointer;
+}
+
+/* Disable the hover bottom line animation for radiant button shapes */
+.radiant-btn::after {
+  display: none !important;
+}
+
+.radiant-btn:hover {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.55), 0 0 25px rgba(189, 0, 255, 0.45) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  color: white !important;
+}
+
+.radiant-btn:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
 .nav-link {
   color: var(--text-secondary);
   text-decoration: none;
